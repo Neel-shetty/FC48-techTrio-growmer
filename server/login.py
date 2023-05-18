@@ -22,7 +22,7 @@ conn = get_connection()
  
 curr = conn.cursor()
 
-curr.execute('SELECT email FROM "user";')
+curr.execute('SELECT email,name,phoneNumber FROM "user";')
 
 data = curr.fetchall()
 for row in data:
@@ -31,6 +31,6 @@ for row in data:
 # CLOSE THE CONNECTION
 conn.close()
 
-uid = "some"
-custom_token = auth.create_custom_token(uid)
-print(custom_token)
+# uid = "some"
+# custom_token = auth.create_custom_token(uid)
+# print(custom_token)

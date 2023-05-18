@@ -7,6 +7,8 @@ from openai1 import get_score
 from flask_cors import CORS
 import psycopg2
 from datetime import datetime
+import firebase_admin
+from firebase_admin import credentials,auth
 
 
 
@@ -48,10 +50,15 @@ class Message( db.Model):
     date_time = db.Column(db.DateTime, default=datetime.utcnow)
     score = db.Column(db.Integer)
     owner_id = db.Column(db.Integer)
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
+# class Phone_Numbers(db.Model):
+#     id = db.Column(db.Integer,primary_keys=True)
+#     phone_numbers = db.Column(db.String(10))
 
+cred =credentials.Certificate("growmer-19c3b-firebase-adminsdk-oc0r6-0abc3eb775.json")
+firebase_admin.initialize_app(cred)
 
 @app.route('/')
 def home():
@@ -98,8 +105,16 @@ def login():
 
         else:
             # login_user(user)
-
-            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone number":user.phoneNumber}
+            # id = str(id)
+            uid = str(user.id)
+            additionals_claims = {
+                "name": user.name,
+                "phoneNumber" :user.phoneNumber,
+                "email":user.email
+                   
+            }
+            custom_token = auth.create_custom_token(uid,additionals_claims)
+            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone_Number":user.phoneNumber,"authToken":str(custom_token)}
 
 
 @app.route('/details',methods=['GET','POST'])
@@ -160,6 +175,8 @@ def sorting_user():
     res = User.query.order_by(User.score.desc()).with_entities(User.name).all()
     return{"status":1,"users":str(res)}
 
+
+ 
 
 @app.route('/logout',methods=['GET'])
 def logout():
