@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import PrimaryButton from "../common/PrimaryButton";
 import { useAuth } from "../../context/auth";
+import { SignIn } from "../../api/SignIn";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -13,6 +14,7 @@ const validationSchema = yup.object().shape({
 });
 
 const InputFields = () => {
+  const [loading, setLoading] = React.useState(false);
   const { signIn } = useAuth();
   const styles = StyleSheet.create({
     root: {
@@ -25,9 +27,12 @@ const InputFields = () => {
     <View style={styles.root}>
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
           console.log(values);
-          signIn();
+          setLoading(true);
+          await SignIn(values.email, values.password);
+          setLoading(false);
+          // signIn();
         }}
         // validationSchema={validationSchema}
       >
