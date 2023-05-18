@@ -34,7 +34,7 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return {"Status":1}
+    return {"status":1}
 
 
 @app.route('/register', methods=["POST"])
