@@ -53,6 +53,10 @@ class Message( db.Model):
 # with app.app_context():
 #     db.create_all()
 
+class Phone_Numbers(db.Model):
+    id = db.Column(db.Integer,primary_keys=True)
+    phone_numbers = db.Column(db.String(10))
+
 cred =credentials.Certificate("growmer-19c3b-firebase-adminsdk-oc0r6-0abc3eb775.json")
 firebase_admin.initialize_app(cred)
 
@@ -110,7 +114,7 @@ def login():
                    
             }
             custom_token = auth.create_custom_token(uid,additionals_claims)
-            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone number":user.phoneNumber,"auth-token":str(custom_token)}
+            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phoneNumber":user.phoneNumber,"authToken":str(custom_token)}
 
 
 @app.route('/details',methods=['GET','POST'])
