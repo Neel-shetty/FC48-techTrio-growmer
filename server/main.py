@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine,func
+from sqlalchemy import create_engine,desc
 # from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from openai1 import get_score
 from flask_cors import CORS
@@ -154,6 +154,13 @@ def scoring():
     user.score = score
     db.session.commit()
     return{"Status":1,"Value":user.score}
+
+@app.route('/user_sort',methods=['GET'])
+def sorting_user():
+    res = User.query.order_by(User.score.desc()).with_entities(User.name).all()
+    return{"status":1,"users":str(res)}
+
+
 @app.route('/logout',methods=['GET'])
 def logout():
 
