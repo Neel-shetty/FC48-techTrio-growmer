@@ -1,7 +1,5 @@
-import { Button, StyleSheet, useColorScheme } from "react-native";
-
-import EditScreenInfo from "../../components/EditScreenInfo";
-import { Text, View, useThemeColor } from "../../components/Themed";
+import { StyleSheet, useColorScheme } from "react-native";
+import { View, useThemeColor } from "../../components/Themed";
 import { useAuth } from "../../context/auth";
 import Colors from "../../constants/Colors";
 import Header from "../../components/HomeScreenComponents/Header";
@@ -22,6 +20,8 @@ export default function TabOneScreen() {
     { light: Colors.light.HomeBackground, dark: Colors.dark.HomeBackground },
     "background"
   );
+
+  console.log('i am here in index.tsx')
 
   return (
     <View style={[styles.container, { backgroundColor: backgroundColor }]}>
