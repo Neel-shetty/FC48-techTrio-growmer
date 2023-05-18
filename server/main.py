@@ -144,9 +144,16 @@ def add_message():
 @app.route('/scoring',methods=["POST"])
 def scoring():
     id = request.args.get("user_id")
-    # count_query = count(Message.query.filter_by(owner_id=1))
-    count_query = db.session.query(func.count()).filter(Message.owner_id==id).scaler()
-    return{"Status":1,"Value":count_query}
+    count_query = Message.query.filter_by(owner_id=1)
+    
+    score = 0
+    for user_id in count_query:
+        score+=user_id.score
+    score = score/(count_query.count())          
+    user = User.query.filter_by(id=id).first()
+    user.score = score
+    db.session.commit()
+    return{"Status":1,"Value":user.score}
 @app.route('/logout',methods=['GET'])
 def logout():
 
