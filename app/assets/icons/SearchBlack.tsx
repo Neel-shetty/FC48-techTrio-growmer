@@ -9,7 +9,7 @@ const SvgComponent = (props: SvgProps) => (
     {...props}
   >
     <Path
-      stroke="#000"
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
@@ -18,4 +18,3 @@ const SvgComponent = (props: SvgProps) => (
   </Svg>
 );
 export default SvgComponent;
-

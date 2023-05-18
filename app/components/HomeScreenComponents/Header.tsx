@@ -3,6 +3,7 @@ import {
   View,
   TouchableOpacity,
   useColorScheme,
+  Image,
 } from "react-native";
 import React from "react";
 import { Text, useThemeColor } from "../Themed";
@@ -42,7 +43,7 @@ const Header = () => {
             justifyContent: "center",
           }}
         >
-          <SearchWhite />
+          {theme === "light" ? <SearchBlack /> : <SearchWhite />}
         </View>
       </TouchableOpacity>
       <View>
@@ -54,7 +55,12 @@ const Header = () => {
           Home
         </Text>
       </View>
-      <View></View>
+      <View>
+        <Image
+          style={{ height: 44, width: 44, borderRadius: 22 }}
+          source={require("../../assets/images/pfp.jpeg")}
+        />
+      </View>
     </View>
   );
 };
