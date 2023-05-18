@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,  View } from "react-native";
 import React from "react";
+import DText from "../../../../components/themedComponents/DText";
 
 const Chat = () => {
   return (
     <View>
-      <Text>Chat</Text>
+      <DText>Chat</DText>
     </View>
   );
 };
