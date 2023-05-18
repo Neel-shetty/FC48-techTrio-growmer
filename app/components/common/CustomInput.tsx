@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import React from "react";
 import DText from "../themedComponents/DText";
-import { Text } from "../Themed";
+import { Text, useThemeColor } from "../Themed";
 import Colors from "../../constants/Colors";
 import { layout } from "../../constants/layout";
 
@@ -20,6 +20,10 @@ const CustomInput = ({
   type: string;
   title: string;
 }) => {
+  const textColor = useThemeColor(
+    { dark: Colors.dark.text, light: Colors.light.text },
+    "text"
+  );
   const styles = StyleSheet.create({
     root: {
       width: layout().widthp,
@@ -30,6 +34,7 @@ const CustomInput = ({
       borderBottomColor: "#CDD1D0",
       fontFamily: "PoppinsRegular",
       fontSize: 16,
+      color: textColor,
     },
   });
   return (
@@ -47,7 +52,7 @@ const CustomInput = ({
         value={value}
         placeholder={placeholder}
         style={styles.input}
-        secureTextEntry={type === "password" ? true : false}
+        // secureTextEntry={type === "password" ? true : false}
       />
     </View>
   );
