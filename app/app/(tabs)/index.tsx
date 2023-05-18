@@ -1,13 +1,29 @@
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet, useColorScheme, Platform } from "react-native";
 import { View, useThemeColor } from "../../components/Themed";
 import { useAuth } from "../../context/auth";
 import Colors from "../../constants/Colors";
 import Header from "../../components/HomeScreenComponents/Header";
 import ChatList from "../../components/HomeScreenComponents/ChatList";
 import { StatusBar } from "expo-status-bar";
+import * as Contacts from "expo-contacts";
+import React from "react";
 
 export default function TabOneScreen() {
   const { signOut } = useAuth();
+
+  React.useEffect(() => {
+    async function getContacts() {
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.Emails],
+      });
+      console.log("🚀 ~ file: index.tsx:14 ~ getContacts ~ data", data);
+    }
+    console.log(Platform.OS);
+    if (Platform.OS !== "web") {
+      getContacts();
+    }
+  }, []);
+
   const theme = useColorScheme();
   console.log("🚀 ~ file: index.tsx:14 ~ TabOneScreen ~ theme:", theme);
 
@@ -21,7 +37,7 @@ export default function TabOneScreen() {
     "background"
   );
 
-  console.log('i am here in index.tsx')
+  console.log("i am here in index.tsx");
 
   return (
     <View style={[styles.container, { backgroundColor: backgroundColor }]}>
