@@ -10,6 +10,7 @@ export default {
     tabIconSelected: tintColorLight,
     backButton: "black",
     buttonBackground: "#24786D",
+    accent: "#24786D",
   },
   dark: {
     text: "#fff",
@@ -19,5 +20,6 @@ export default {
     tabIconSelected: tintColorDark,
     backButton: "white",
     buttonBackground: "#24786D",
+    accent: "#24786D",
   },
 };

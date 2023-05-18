@@ -14,19 +14,26 @@ const PrimaryButton = ({
   const buttonBackgroundColor = useThemeColor(
     {
       dark: Colors.dark.buttonBackground,
-      light: Colors.light.buttonBackground,
+      light: Colors.light.accent,
     },
     "buttonBackground"
   );
   const styles = StyleSheet.create({
     buttonContainer: {
       backgroundColor: buttonBackgroundColor,
-      width: layout().width,
+      width: layout().widthp,
+      height: 48,
+      borderRadius: 16,
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
     },
   });
   return (
     <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
-      <Text lightColor={Colors.light.text} darkColor={Colors.dark.text}>
+      <Text
+        style={{ fontFamily: "PoppinsSemiBold", color: "white", fontSize: 16 }}
+      >
         {title}
       </Text>
     </TouchableOpacity>

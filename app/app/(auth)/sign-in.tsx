@@ -4,7 +4,8 @@ import { useAuth } from "../../context/auth";
 import { Text, useThemeColor } from "../../components/Themed";
 import Colors from "../../constants/Colors";
 import Header from "../../components/signInComponents/Header";
-import PrimaryButton from "../../components/common/PrimaryButton";
+import InputFields from "../../components/signInComponents/InputFields";
+import Info from "../../components/signInComponents/Info";
 
 const signIn = () => {
   const { signIn } = useAuth();
@@ -13,17 +14,25 @@ const signIn = () => {
     "text"
   );
   console.log("🚀 ~ file: sign-in.tsx:7 ~ signIn ~ signIn:", signIn);
+  const backgroundColor = useThemeColor(
+    { dark: Colors.dark.background, light: Colors.light.background },
+    "background"
+  );
   return (
-    <View>
+    <View style={{ backgroundColor: backgroundColor }}>
       <Header />
-      <Text darkColor={Colors.dark.text} lightColor={Colors.light.text}>
-        hehe boi
-      </Text>
-      <PrimaryButton title={"Sign In"} onPress={signIn} />
+      <View style={styles.spacer} />
+      <Info />
+      <View style={styles.spacer} />
+      <InputFields />
     </View>
   );
 };
 
 export default signIn;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  spacer: {
+    height: 20,
+  },
+});

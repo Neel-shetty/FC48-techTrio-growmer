@@ -10,7 +10,14 @@ const Header = () => {
     "backButton"
   );
   return (
-    <View style={{ height: 50, justifyContent: "center", paddingLeft: 10 }}>
+    <View
+      style={{
+        height: 50,
+        justifyContent: "center",
+        paddingLeft: 10,
+        paddingTop: 20,
+      }}
+    >
       <TouchableOpacity>
         <Ionicons name="md-arrow-back" size={24} color={iconColor} />
       </TouchableOpacity>
