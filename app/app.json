@@ -12,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -22,6 +20,7 @@
       }
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -41,7 +40,10 @@
         "expo-contacts",
         {
           "contactsPermission": "Allow Growmer to access your contacts."
-        }
+        },
+
+        "@react-native-firebase/app",
+        "@react-native-google-signin/google-signin"
       ]
     ],
     "extra": {

@@ -35,7 +35,14 @@ const Chat = ({ chat }: { chat: ChatType }) => {
             source={chat.profilePic}
           />
         </View>
-        <View style={{ justifyContent: "center", flex: 2, paddingTop: 6 }}>
+        <View
+          style={{
+            justifyContent: "center",
+            flex: 2,
+            paddingTop: 6,
+            // backgroundColor: "pink",
+          }}
+        >
           <DText
             style={{ fontSize: 20, padding: 0, margin: 0, lineHeight: 23 }}
           >

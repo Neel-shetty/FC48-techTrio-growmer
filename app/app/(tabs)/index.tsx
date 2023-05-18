@@ -1,9 +1,9 @@
 import { StyleSheet, useColorScheme, Platform } from "react-native";
-import { View, useThemeColor } from "../../../components/Themed";
-import { useAuth } from "../../../context/auth";
-import Colors from "../../../constants/Colors";
-import Header from "../../../components/HomeScreenComponents/Header";
-import ChatList from "../../../components/HomeScreenComponents/ChatList";
+import { View, useThemeColor } from "../../components/Themed";
+import { useAuth } from "../../context/auth";
+import Colors from "../../constants/Colors";
+import Header from "../../components/HomeScreenComponents/Header";
+import ChatList from "../../components/HomeScreenComponents/ChatList";
 import { StatusBar } from "expo-status-bar";
 import * as Contacts from "expo-contacts";
 import React from "react";
@@ -13,10 +13,12 @@ export default function TabOneScreen() {
 
   React.useEffect(() => {
     async function getContacts() {
-      const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Emails],
-      });
-      console.log("🚀 ~ file: index.tsx:14 ~ getContacts ~ data", data);
+      await Contacts.requestPermissionsAsync();
+      const { data } = await Contacts.getContactsAsync();
+      console.log(
+        "🚀 ~ file: index.tsx:14 ~ getContacts ~ data",
+        data[0].phoneNumbers
+      );
     }
     console.log(Platform.OS);
     if (Platform.OS !== "web") {

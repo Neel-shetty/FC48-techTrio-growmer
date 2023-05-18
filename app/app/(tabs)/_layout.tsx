@@ -30,7 +30,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="(messageStack)"
+        name="index"
         options={{
           title: "Message",
           tabBarIcon: ({ color, focused }) =>
@@ -38,9 +38,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="(leaderboardStack)"
         options={{
-          title: "Tab Two",
+          title: "LeaderBoard",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

@@ -40,17 +40,27 @@ function useProtectedRoute(user: boolean) {
 }
 
 export function Provider(props: { children: React.ReactNode }) {
-  const [user, setAuth] = React.useState(true);
+  const [user, setAuth] = React.useState(false);
+
+  React.useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setAuth(true);
+      } else {
+        setAuth(false);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   useProtectedRoute(user);
 
   return (
     <AuthContext.Provider
       value={{
-        signIn: () => {
-          console.log("running sign in");
+        signIn: async () => {
           
-          setAuth(true);
         },
         signOut: () => setAuth(false),
       }}
