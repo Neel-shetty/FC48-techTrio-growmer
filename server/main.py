@@ -113,7 +113,7 @@ def login():
                 "email":user.email
                    
             }
-            custom_token = auth.create_custom_token(uid,additionals_claims)
+            custom_token = auth.create_custom_token(uid,developer_claims=additionals_claims)
             return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phoneNumber":user.phoneNumber,"authToken":str(custom_token)}
 
 
