@@ -4,9 +4,12 @@ import React from "react";
 type AuthContext = {
   signIn: () => void;
   signOut: () => void;
-} | null;
+};
 
-const AuthContext = React.createContext<AuthContext>(null);
+const AuthContext = React.createContext<AuthContext>({
+  signIn() {},
+  signOut() {},
+});
 // This hook can be used to access the user info.
 export function useAuth() {
   return React.useContext(AuthContext);
@@ -42,7 +45,7 @@ export function Provider(props: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        signIn:  () => {
+        signIn: () => {
           console.log("running sign in");
           setAuth(true);
         },
