@@ -4,12 +4,12 @@ import axios from "axios";
 export async function SignIn(email: string, password: string) {
   axios
     .post(
-      `https://fc48-techtrio-growmer-production.up.railway.app/login?email=harsh@test.com&password=123456`
+      `https://fc48-techtrio-growmer-production.up.railway.app/login?email=${email}&password=${password}`
     )
     .then((res) => {
-      console.log("response -- ", res.data.response());
+      console.log("response -- ", res.data);
     })
     .catch((err) => {
-      console.log("error --- ", err?.response);
+      console.log("error --- ", err);
     });
 }
