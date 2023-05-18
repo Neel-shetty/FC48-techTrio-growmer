@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,func
 # from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from openai1 import get_score
 from flask_cors import CORS
 import psycopg2
 from datetime import datetime
+
 
 
 #Connecting to Database
@@ -140,9 +141,12 @@ def add_message():
         db.session.commit()
     return {"status":1}
 
-@app.route('/scoring')
-def scoring()
-
+@app.route('/scoring',methods=["POST"])
+def scoring():
+    id = request.args.get("user_id")
+    # count_query = count(Message.query.filter_by(owner_id=1))
+    count_query = db.session.query(func.count()).filter(Message.owner_id==id).scaler()
+    return{"Status":1,"Value":count_query}
 @app.route('/logout',methods=['GET'])
 def logout():
 
