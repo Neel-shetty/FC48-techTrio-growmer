@@ -1,9 +1,9 @@
 import { StyleSheet, useColorScheme, Platform } from "react-native";
-import { View, useThemeColor } from "../../components/Themed";
-import { useAuth } from "../../context/auth";
-import Colors from "../../constants/Colors";
-import Header from "../../components/HomeScreenComponents/Header";
-import ChatList from "../../components/HomeScreenComponents/ChatList";
+import { View, useThemeColor } from "../../../components/Themed";
+import { useAuth } from "../../../context/auth";
+import Colors from "../../../constants/Colors";
+import Header from "../../../components/HomeScreenComponents/Header";
+import ChatList from "../../../components/HomeScreenComponents/ChatList";
 import { StatusBar } from "expo-status-bar";
 import * as Contacts from "expo-contacts";
 import React from "react";
