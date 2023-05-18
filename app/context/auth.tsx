@@ -42,8 +42,11 @@ export function Provider(props: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        signIn: () => setAuth(false),
-        signOut: () => setAuth(true),
+        signIn:  () => {
+          console.log("running sign in");
+          setAuth(true);
+        },
+        signOut: () => setAuth(false),
       }}
     >
       {props.children}
