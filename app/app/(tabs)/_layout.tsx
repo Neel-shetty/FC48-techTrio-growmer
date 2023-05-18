@@ -1,6 +1,8 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
 import { Pressable, useColorScheme } from "react-native";
+import InboxSelected from "../../assets/icons/InboxSelected";
+import InboxGray from "../../assets/icons/InboxGray";
 
 import Colors from "../../constants/Colors";
 
@@ -31,7 +33,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Message",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color, focused }) =>
+            focused ? <InboxSelected /> : <InboxGray />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
