@@ -3,10 +3,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 # from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from openai1 import get_score
+from flask_cors import CORS
 
 #Connecting to Database
 app = Flask(__name__)
-
+CORS(app)
 app.config['SECRET_KEY'] = 'FANTOM'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
