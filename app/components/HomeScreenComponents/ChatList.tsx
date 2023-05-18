@@ -10,6 +10,23 @@ const ChatList = () => {
     { dark: Colors.dark.background, light: Colors.light.background },
     "background"
   );
+
+  const chatList = [
+    {
+      id: 1,
+      name: "John Doe",
+      lastMessage: "Hello",
+      lastMessageTime: new Date(2023, 5, 9),
+      profilePic: require("../../assets/images/favicon.png"),
+    },
+    {
+      id: 2,
+      name: "buzz lightyear",
+      lastMessage: "hehe boi",
+      lastMessageTime: new Date(),
+      profilePic: require("../../assets/images/pfp.jpeg"),
+    },
+  ];
   return (
     <View
       style={{
@@ -21,7 +38,8 @@ const ChatList = () => {
         flex: 1,
       }}
     >
-      <Chat />
+      <Chat chat={chatList[0]} />
+      <Chat chat={chatList[1]} />
     </View>
   );
 };

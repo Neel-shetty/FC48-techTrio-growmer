@@ -1,5 +1,7 @@
 import { useRouter, useSegments } from "expo-router";
 import React from "react";
+import { auth } from "../config/firebaseConfig";
+import { getAuth, signInWithCustomToken } from "firebase/auth";
 
 type AuthContext = {
   signIn: () => void;
@@ -47,6 +49,7 @@ export function Provider(props: { children: React.ReactNode }) {
       value={{
         signIn: () => {
           console.log("running sign in");
+          
           setAuth(true);
         },
         signOut: () => setAuth(false),
