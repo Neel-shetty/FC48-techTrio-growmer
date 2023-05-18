@@ -48,6 +48,7 @@ def register():
             email=request.args.get('email'),
             name=request.args.get('name'),
             password=request.args.get('password'),
+            phoneNumber =request.args.get('phoneNumber'),
             score = 0,)
         new_user.password = generate_password_hash(new_user.password, method='pbkdf2:sha256', salt_length=8)
         db.session.add(new_user)
@@ -78,7 +79,7 @@ def login():
         else:
             login_user(user)
 
-    return {"status":1}
+    return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone number":user.phoneNumber}
 
 
 @app.route('/secrets',methods=['GET'])
