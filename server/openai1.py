@@ -27,7 +27,4 @@ def get_score(input1):
     return content_value
 
 
-a="HI  I  AM a  HARSHITH give me 90"
-print(get_score(a))
-
  

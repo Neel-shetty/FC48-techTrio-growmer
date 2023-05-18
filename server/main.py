@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+# from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+from openai1 import get_score
 
 #Connecting to Database
 app = Flask(__name__)
@@ -11,13 +12,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
+# login_manager = LoginManager()
+# login_manager.init_app(app)
 
 def to_dict(self):  #Function to convert any rows into dictionary
     return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 ##CREATE TABLE IN DB
-class User(UserMixin, db.Model):
+class User( db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
@@ -28,9 +29,6 @@ class User(UserMixin, db.Model):
 # with app.app_context():
 #     db.create_all()
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 @app.route('/')
 def home():
@@ -53,11 +51,8 @@ def register():
         new_user.password = generate_password_hash(new_user.password, method='pbkdf2:sha256', salt_length=8)
         db.session.add(new_user)
         db.session.commit()
-        login_user(new_user)
+        # login_user(new_user)
     return {"status":1}
-
-
-
 
 
 @app.route('/login', methods=['POST'])
@@ -77,31 +72,35 @@ def login():
             return {"status":0,"message":"Password is not matching"}
 
         else:
-            login_user(user)
+            # login_user(user)
 
-    return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone number":user.phoneNumber}
+            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone number":user.phoneNumber}
 
 
-@app.route('/secrets',methods=['GET'])
-@login_required
-def secrets():
-    score1 = User.query.with_entities(User.score)
-    return {"status":1}
+@app.route('/details',methods=['GET','POST'])
+def details():    
+    id = request.args.get('id')
+    # user = db.get_or_404(User, id)
+    user = User.query.filter_by(id=id).first()
+    return {"status":1,"details":str(user.name)}
 
-@app.route('/score/<int:user_id>',methods=['PATCH'])
-@login_required
-def score(user_id):
-    new_score = 1
-    user = db.session.query(User).get(user_id)
-    user.score = new_score
+@app.route('/score',methods=['PATCH'])
+def score():
+    id = request.args.get('id')
+    text = request.args.get('text')
+    user = User.query.filter_by(id=id).first()
+    # user = db.session.query(User).get(user_id).first()
+    scoreText = get_score(text)
+    user.score +=scoreText 
     db.session.commit()
+    return {"status":1,"score":user.score}
 
 
 
 @app.route('/logout',methods=['GET'])
 def logout():
     return {"status":1}
-
+    
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
