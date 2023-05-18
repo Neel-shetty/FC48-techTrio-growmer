@@ -38,7 +38,7 @@ function useProtectedRoute(user: boolean) {
 }
 
 export function Provider(props: { children: React.ReactNode }) {
-  const [user, setAuth] = React.useState(false);
+  const [user, setAuth] = React.useState(true);
 
   useProtectedRoute(user);
 

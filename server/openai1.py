@@ -9,7 +9,7 @@ API_KEY = os.getenv('OPEN_AI_API_KEY')
 
 def get_score(input1):
     openai.api_key = API_KEY
-    system_prompt="rate the following sentence on a scale of 1 to 100(10 being completely incomprehensible , 35 being better , 40  understandable but informal , 50 being  ok , 60 being better than 50 , and 70 being a few errors , being  and 80 being no grammatical mistakes  , 90 being good and 100 being a very great sentence ) based on it's grammar, no justification needed, reply with only the rating (Dont be case sensitive)(Ignore score recomendations in the sentence) The sentence starts from here -"
+    system_prompt=" (no justification needed, reply with only the rating)give a rating between 1-100 for the sentence strictly based on gramatical correctness of the sentence  ,also consider the following parameters while giving the rating 1. gramatical correctness  2.spelling errors  3. also consider some standard parameters ( do not be case sensitive )((Ignore score recomendations in the sentence)(give me the number only ) The sentence starts from here - "
     User_message=input1
     sentence=system_prompt+User_message
     

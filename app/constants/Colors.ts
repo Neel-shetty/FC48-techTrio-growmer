@@ -11,6 +11,7 @@ export default {
     backButton: "black",
     buttonBackground: "#24786D",
     accent: "#24786D",
+    HomeBackground: "#000e08",
   },
   dark: {
     text: "#fff",
@@ -21,5 +22,6 @@ export default {
     backButton: "white",
     buttonBackground: "#24786D",
     accent: "#24786D",
+    HomeBackground: "white",
   },
 };
