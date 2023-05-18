@@ -6,7 +6,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 #Connecting to Database
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'NICE'
+app.config['SECRET_KEY'] = 'FANTOM'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -22,6 +22,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
+    phoneNumber = db.Column(db.String(10))
     score = db.Column(db.Integer)
 #Line below only required once, when creating DB.
 # with app.app_context():
@@ -33,7 +34,7 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return {"Status":"1"}
+    return {"Status":1}
 
 
 @app.route('/register', methods=["POST"])
@@ -42,7 +43,7 @@ def register():
     if request.method == "POST":
         if User.query.filter_by(email = request.args.get('email')).first():
 
-            return redirect(url_for('login'))
+            return {"status":0,"message":"account already exists"}
         new_user = User(
             email=request.args.get('email'),
             name=request.args.get('name'),
@@ -52,7 +53,9 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-    return {"Status":"1"}
+    return {"status":1}
+
+
 
 
 
@@ -66,23 +69,23 @@ def login():
 
         if not user:
 
-            return {"Status":"0"}
+            return {"status":0,"message":"User not found,Please register"}
 
         elif not check_password_hash(user.password,password):
 
-            return {"Status":"0"}
+            return {"status":0,"message":"Password is not matching"}
 
         else:
             login_user(user)
 
-    return {"Status":"1"}
+    return {"status":1}
 
 
 @app.route('/secrets',methods=['GET'])
 @login_required
 def secrets():
     score1 = User.query.with_entities(User.score)
-    return {"Status":"1"}
+    return {"status":1}
 
 @app.route('/score/<int:user_id>',methods=['PATCH'])
 @login_required
@@ -96,7 +99,7 @@ def score(user_id):
 
 @app.route('/logout',methods=['GET'])
 def logout():
-    return {"Status":"1"}
+    return {"status":1}
 
 
 if __name__ == "__main__":
