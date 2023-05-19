@@ -7,9 +7,36 @@ import { GetLeaderBoard } from "../../../api/leaderBoard";
 import DText from "../../../components/themedComponents/DText";
 import Colors from "../../../constants/Colors";
 import { layout } from "../../../constants/layout";
+import Chat from "../../../components/HomeScreenComponents/Chat";
 
 export default function TabTwoScreen() {
-  const [leaderBoard, setLeaderBoard] = React.useState([]);
+  const [leaderBoard, setLeaderBoard] = React.useState();
+  const data = [
+    {
+      id: 1,
+      name: "John Doe",
+      lastMessage: "Hello",
+      lastMessageTime: new Date(2023, 5, 9),
+      profilePic: require("../../../assets/images/pffp.jpeg"),
+      score: 100,
+    },
+    {
+      id: 2,
+      name: "buzz lightyear",
+      lastMessage: "hehe boi",
+      lastMessageTime: new Date(),
+      profilePic: require("../../../assets/images/buzz.jpg"),
+      score: 300,
+    },
+    {
+      id: 3,
+      name: "John Doe",
+      lastMessage: "Hello",
+      lastMessageTime: new Date(2023, 5, 9),
+      profilePic: require("../../../assets/images/pffp.jpeg"),
+      score: 30,
+    },
+  ];
   console.log(
     "🚀 ~ file: leaderBoard.tsx:12 ~ TabTwoScreen ~ leaderBoard:",
     leaderBoard
@@ -67,17 +94,12 @@ export default function TabTwoScreen() {
           borderTopLeftRadius: 40,
           alignItems: "center",
           justifyContent: "center",
-          
         }}
       >
         <FlatList
-          data={leaderBoard}
+          data={data}
           renderItem={({ item }) => {
-            return (
-              <View style={{ width: "100%", backgroundColor: "pink" }}>
-                <DText lightColor="black">test</DText>
-              </View>
-            );
+            return <Chat chat={item} score={item.score} />;
           }}
         />
       </View>

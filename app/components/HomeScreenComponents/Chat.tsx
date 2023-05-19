@@ -14,7 +14,7 @@ type ChatType = {
   profilePic: any;
 };
 
-const Chat = ({ chat }: { chat: ChatType }) => {
+const Chat = ({ chat, score }: { chat: ChatType; score: number }) => {
   const date = formatDistance(chat.lastMessageTime, new Date(), {
     addSuffix: true,
   });
@@ -58,15 +58,25 @@ const Chat = ({ chat }: { chat: ChatType }) => {
             {chat.lastMessage}
           </Text>
         </View>
-        <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            paddingLeft: 50,
+          }}
+        >
           <Text
-            style={{ textAlign: "right", fontFamily: "PoppinsRegular" }}
-            lightColor="#797C7B"
+            style={{
+              textAlign: "right",
+              fontFamily: "PoppinsSemiBold",
+              fontSize: 16,
+            }}
+            lightColor="red"
             darkColor="#9b9b9b"
           >
-            {/* {date} */}
+            {score}
           </Text>
-          {/* <View style={{ height: 21, width: 21 }}></View> */}
         </View>
       </Link>
     </TouchableOpacity>

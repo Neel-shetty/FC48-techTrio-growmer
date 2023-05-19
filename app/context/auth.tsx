@@ -64,7 +64,7 @@ export function Provider(props: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         signIn: async () => {},
-        signOut: () => setAuth(false),
+        signOut: () => setAuth(true),
         user,
       }}
     >

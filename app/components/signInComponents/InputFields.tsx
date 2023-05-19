@@ -31,6 +31,7 @@ const InputFields = () => {
           console.log(values);
           setLoading(true);
           await SignIn(values.email, values.password);
+          signIn();
           setLoading(false);
         }}
       >

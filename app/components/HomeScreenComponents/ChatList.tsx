@@ -38,7 +38,7 @@ const ChatList = () => {
       profilePic: require("../../assets/images/pffp.jpeg"),
     },
     {
-      id: 2,
+      id: 22,
       name: "buzz lightyear",
       lastMessage: "hehe boi",
       lastMessageTime: new Date(),
@@ -52,21 +52,21 @@ const ChatList = () => {
       profilePic: require("../../assets/images/pffp.jpeg"),
     },
     {
-      id: 2,
+      id: 21,
       name: "buzz lightyear",
       lastMessage: "hehe boi",
       lastMessageTime: new Date(),
       profilePic: require("../../assets/images/buzz.jpg"),
     },
     {
-      id: 5,
+      id: 54,
       name: "John Doe",
       lastMessage: "Hello",
       lastMessageTime: new Date(2023, 5, 9),
       profilePic: require("../../assets/images/pffp.jpeg"),
     },
     {
-      id: 6,
+      id: 65,
       name: "John Doe",
       lastMessage: "Hello",
       lastMessageTime: new Date(2023, 5, 9),
@@ -100,11 +100,12 @@ const ChatList = () => {
         flex: 1,
       }}
     >
-      <Chat chat={chatList[0]} />
-      <Chat chat={chatList[1]} />
+      {/* <Chat chat={chatList[0]} />
+      <Chat chat={chatList[1]} /> */}
       <FlatList
         data={chatList}
         renderItem={({ item }) => <Chat chat={item} />}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
