@@ -213,8 +213,8 @@ def scoring():
 
 @app.route('/user_sort',methods=['GET'])
 def sorting_user():
-    res = User.query.order_by(User.score.desc()).with_entities(User.name).all()
-    return{"status":1,"users":str(res)}
+    res = User.query.order_by(User.score.desc()).with_entities(User.name,User.score).all()
+    return{"status":1,"users":res}
 
 
  

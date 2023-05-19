@@ -1,36 +1,17 @@
 import firebase_admin
-from firebase_admin import credentials,auth
-import psycopg2
+from firebase_admin import credentials
+from firebase_admin import db
+import json
 
 
+cred_obj = credentials.Certificate('growmer-19c3b-firebase-adminsdk-oc0r6-0abc3eb775.json')
+firebase_admin.initialize_app(cred_obj,{
+    'databaseURL':'https://growmer-19c3b.firebaseio.com/'
+})
 
-cred =credentials.Certificate("growmer-19c3b-firebase-adminsdk-oc0r6-0abc3eb775.json")
-firebase_admin.initialize_app(cred)
+ref = db.reference("/chats/1-2")
+new_value=  'Updated Value'
+ref.update({'userId': new_value})
 
-def get_connection():
-    try:
-        return psycopg2.connect(
-            database="railway",
-            user="postgres",
-            password="5AbzfqI1Sy3L8nFF0e3t",
-            host="containers-us-west-53.railway.app",
-            port=6771,
-        )
-    except:
-        return False
-conn = get_connection()
- 
-curr = conn.cursor()
-
-curr.execute('SELECT email,name,phoneNumber FROM "user";')
-
-data = curr.fetchall()
-for row in data:
-    print(row)
- 
-# CLOSE THE CONNECTION
-conn.close()
-
-# uid = "some"
-# custom_token = auth.create_custom_token(uid)
-# print(custom_token)
+# Print a success message
+print('Data updated successfully.')
