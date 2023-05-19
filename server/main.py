@@ -156,17 +156,56 @@ def add_message():
         )
         db.session.add(new_message)
         db.session.commit()
+
+        
     return {"status":1}
+
+@app.route('/recieve',methods=['POST'])
+def receving_message():
+    if request.method == "POST":
+        owner_id = request.args.get('user_id')
+        text = request.args.get('text')
+        scoreText = get_score(text)
+
+        new_message = Message(
+            text=text,
+            date_time=datetime.now(),
+            score=scoreText,
+            owner_id=owner_id,
+        )
+        db.session.add(new_message)
+        db.session.commit()
+        
+        count_query = Message.query.filter_by(owner_id = owner_id)
+        score = 0
+        for user_id in count_query:
+            score+=user_id.score
+        try:
+            score = score/(count_query.count()) 
+        except ZeroDivisionError:
+            score=0         
+        user = User.query.filter_by(id=owner_id).first()
+        user.score = score
+        db.session.commit()
+    return{"Status":1}
+
+
+
+       
+
 
 @app.route('/scoring',methods=["POST"])
 def scoring():
     id = request.args.get("user_id")
-    count_query = Message.query.filter_by(owner_id=1)
+    count_query = Message.query.filter_by(owner_id=id)
     
     score = 0
     for user_id in count_query:
         score+=user_id.score
-    score = score/(count_query.count())          
+    try:
+        score = score/(count_query.count()) 
+    except ZeroDivisionError:
+        score=0            
     user = User.query.filter_by(id=id).first()
     user.score = score
     db.session.commit()
