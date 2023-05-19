@@ -187,7 +187,7 @@ def receving_message():
         user = User.query.filter_by(id=owner_id).first()
         user.score = score
         db.session.commit()
-    return{"Status":1}
+    return{"Status":1,"scoreValue":scoreText}
 
 
 
