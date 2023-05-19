@@ -3,6 +3,7 @@ import { Link, Tabs } from "expo-router";
 import { Pressable, useColorScheme } from "react-native";
 import InboxSelected from "../../assets/icons/InboxSelected";
 import InboxGray from "../../assets/icons/InboxGray";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import Colors from "../../constants/Colors";
 
@@ -41,7 +42,9 @@ export default function TabLayout() {
         name="(leaderboardStack)"
         options={{
           title: "LeaderBoard",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="leaderboard" size={24} color={color} />
+          ),
         }}
       />
     </Tabs>

@@ -7,10 +7,12 @@ import DText from "../themedComponents/DText";
 const Message = ({
   textAlign,
   message,
+  // score,
 }: {
   textAlign: "right" | "left";
   message: string;
   time: Date;
+  // score: number | null;
 }) => {
   return (
     <View
@@ -32,7 +34,28 @@ const Message = ({
         />
       )}
       <View></View>
-      <View style={textAlign === "right" ? styles.rRoot : styles.lRoot}>
+      <View
+        style={
+          textAlign === "right"
+            ? [styles.rRoot, { flexDirection: "row" }]
+            : styles.lRoot
+        }
+      >
+        {/* {textAlign === "right" && (
+          <View
+            style={{
+              height: 25,
+              width: 25,
+              borderRadius: 10,
+              backgroundColor: "white",
+              marginRight: 5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <DText>{score ? score : "-"}</DText>
+          </View>
+        )} */}
         <Text
           style={[
             styles.text,

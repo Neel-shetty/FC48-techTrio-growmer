@@ -11,20 +11,7 @@ import React from "react";
 export default function TabOneScreen() {
   const { signOut } = useAuth();
 
-  React.useEffect(() => {
-    async function getContacts() {
-      await Contacts.requestPermissionsAsync();
-      const { data } = await Contacts.getContactsAsync();
-      // console.log(
-      //   "🚀 ~ file: index.tsx:14 ~ getContacts ~ data",
-      //   data[0].phoneNumbers
-      // );
-    }
-    console.log(Platform.OS);
-    if (Platform.OS !== "web") {
-      getContacts();
-    }
-  }, []);
+  React.useEffect(() => {}, []);
 
   const theme = useColorScheme();
   console.log("🚀 ~ file: index.tsx:14 ~ TabOneScreen ~ theme:", theme);
