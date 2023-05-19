@@ -1,11 +1,12 @@
 import { useRouter, useSegments } from "expo-router";
 import React from "react";
-import { auth } from "../config/firebaseConfig";
-import { getAuth, signInWithCustomToken } from "firebase/auth";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 type AuthContext = {
   signIn: () => void;
   signOut: () => void;
+  user: any;
 };
 
 const AuthContext = React.createContext<AuthContext>({
@@ -41,28 +42,28 @@ function useProtectedRoute(user: boolean) {
 
 export function Provider(props: { children: React.ReactNode }) {
   const [user, setAuth] = React.useState(false);
+  console.log("🚀 ~ file: auth.tsx:44 ~ Provider ~ user:", user);
+  const [initializing, setInitializing] = React.useState(true);
 
-  React.useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setAuth(true);
-      } else {
-        setAuth(false);
-      }
-    });
-
-    return unsubscribe;
-  }, []);
+  React.useEffect(() => {}, []);
 
   useProtectedRoute(user);
+  function onAuthStateChanged(user) {
+    setAuth(user);
+    if (initializing) setInitializing(false);
+  }
+
+  React.useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        signIn: async () => {
-          
-        },
+        signIn: async () => {},
         signOut: () => setAuth(false),
+        user,
       }}
     >
       {props.children}

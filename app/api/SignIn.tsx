@@ -1,7 +1,7 @@
 import { api } from ".";
 import axios from "axios";
 import { signInWithCustomToken } from "firebase/auth";
-import { auth } from "../config/firebaseConfig";
+import auth from "@react-native-firebase/auth";
 
 export async function SignIn(email: string, password: string) {
   axios
@@ -9,11 +9,15 @@ export async function SignIn(email: string, password: string) {
       `https://fc48-techtrio-growmer-production.up.railway.app/login?email=${email}&password=${password}`
     )
     .then(async (res) => {
-      console.log("response -- ", res.data.authtoken);
-      const idk = await signInWithCustomToken(auth, res.data.token);
-      console.log("🚀 ~ file: SignIn.tsx:14 ~ .then ~ idk:", idk);
+      console.log("response -- ", res.data);
+      try {
+        const re = await auth().signInWithCustomToken(res.data.authToken);
+        console.log("🚀 ~ file: SignIn.tsx:14 ~ .then ~ re:", re);
+      } catch (e) {
+        console.log("error in fb  --- ", e);
+      }
     })
     .catch((err) => {
-      console.log("error --- ", err);
+      console.log("error --- ", err.response.data);
     });
 }

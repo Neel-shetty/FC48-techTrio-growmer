@@ -40,11 +40,9 @@
         "expo-contacts",
         {
           "contactsPermission": "Allow Growmer to access your contacts."
-        },
-
-        "@react-native-firebase/app",
-        "@react-native-google-signin/google-signin"
-      ]
+        }
+      ],
+      "@react-native-firebase/app"
     ],
     "extra": {
       "eas": {

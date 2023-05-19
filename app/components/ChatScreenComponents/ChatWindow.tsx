@@ -12,21 +12,28 @@ const ChatWindow = () => {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 23,
   ]);
   const ref = React.useRef(FlatList);
-  async function getMessages() {
-    // const res = await firestore()
-    //   .collection("chats")
-    //   .doc(route.params?.chatId)
-    //   .collection("messages")
-    //   .orderBy("createdAt", "asc")
-    //   // .limitToLast(5)
-    //   .onSnapshot((doc) => {
-    //     console.log("🚀 ~ file: Chat.tsx:58 ~ getMessages ~ doc:", doc);
-    //     const texts: messagesType = [];
-    //     doc.forEach((message) => {
-    //       texts.push(message.data() as messagesType[0]);
-    //     });
-    //     setMessages(texts);
-    //   });
+  
+    async function getMessages() {
+    if (route.params?.history) {
+      setMessages(route.params?.history);
+      return;
+    }
+    firestore()
+      .collection('chats')
+      .doc(route.params?.chatId)
+      .collection('messages')
+      .orderBy('createdAt', 'asc')
+      // .limitToLast(5)
+      .onSnapshot(doc => {
+        console.log('🚀 ~ file: Chat.tsx:58 ~ getMessages ~ doc:', doc);
+        const texts: messagesType = [];
+        doc.forEach(message => {
+          texts.push(message.data() as messagesType[0]);
+        });
+        setMessages(texts);
+      });
+  
+
 
     const querySnapshot = await getDocs(collection(db, "chats"))
     querySnapshot.forEach((doc) => {

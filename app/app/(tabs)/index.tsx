@@ -15,10 +15,10 @@ export default function TabOneScreen() {
     async function getContacts() {
       await Contacts.requestPermissionsAsync();
       const { data } = await Contacts.getContactsAsync();
-      console.log(
-        "🚀 ~ file: index.tsx:14 ~ getContacts ~ data",
-        data[0].phoneNumbers
-      );
+      // console.log(
+      //   "🚀 ~ file: index.tsx:14 ~ getContacts ~ data",
+      //   data[0].phoneNumbers
+      // );
     }
     console.log(Platform.OS);
     if (Platform.OS !== "web") {
