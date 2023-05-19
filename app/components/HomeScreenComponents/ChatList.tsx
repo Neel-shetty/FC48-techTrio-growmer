@@ -4,6 +4,8 @@ import Chat from "./Chat";
 import { layout } from "../../constants/layout";
 import Colors from "../../constants/Colors";
 import { useThemeColor } from "../Themed";
+import firestore from "@react-native-firebase/firestore";
+import { useAuth } from "../../context/auth";
 
 const ChatList = () => {
   const backgroundColor = useThemeColor(
@@ -11,22 +13,40 @@ const ChatList = () => {
     "background"
   );
 
+  const { user } = useAuth();
+
   const chatList = [
     {
       id: 1,
       name: "John Doe",
       lastMessage: "Hello",
       lastMessageTime: new Date(2023, 5, 9),
-      profilePic: require("../../assets/images/favicon.png"),
+      profilePic: require("../../assets/images/pffp.jpeg"),
     },
     {
       id: 2,
       name: "buzz lightyear",
       lastMessage: "hehe boi",
       lastMessageTime: new Date(),
-      profilePic: require("../../assets/images/pfp.jpeg"),
+      profilePic: require("../../assets/images/buzz.jpg"),
     },
   ];
+
+  async function getChatList() {
+    const chats = await firestore()
+      .collection("chats")
+      .where("id", "==", user.uid)
+      .get();
+    console.log(
+      "🚀 ~ file: ChatList.tsx ~ line 67 ~ getChatList ~ chats",
+      chats
+    );
+  }
+
+  React.useEffect(() => {
+    getChatList();
+  }, []);
+
   return (
     <View
       style={{

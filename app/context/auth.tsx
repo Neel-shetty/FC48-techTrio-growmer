@@ -12,6 +12,7 @@ type AuthContext = {
 const AuthContext = React.createContext<AuthContext>({
   signIn() {},
   signOut() {},
+  user: null,
 });
 // This hook can be used to access the user info.
 export function useAuth() {
@@ -48,6 +49,7 @@ export function Provider(props: { children: React.ReactNode }) {
   React.useEffect(() => {}, []);
 
   useProtectedRoute(user);
+
   function onAuthStateChanged(user) {
     setAuth(user);
     if (initializing) setInitializing(false);

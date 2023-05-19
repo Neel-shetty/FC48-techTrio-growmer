@@ -10,14 +10,17 @@ export async function SignIn(email: string, password: string) {
     )
     .then(async (res) => {
       console.log("response -- ", res.data);
+      if (res.data?.status === 0) {
+        return;
+      }
       try {
-        const re = await auth().signInWithCustomToken(res.data.authToken);
+        const re = await auth().signInWithCustomToken(res.data?.authToken);
         console.log("🚀 ~ file: SignIn.tsx:14 ~ .then ~ re:", re);
       } catch (e) {
         console.log("error in fb  --- ", e);
       }
     })
     .catch((err) => {
-      console.log("error --- ", err.response.data);
+      console.log("error --- ", err);
     });
 }

@@ -32,9 +32,7 @@ const InputFields = () => {
           setLoading(true);
           await SignIn(values.email, values.password);
           setLoading(false);
-          // signIn();
         }}
-        // validationSchema={validationSchema}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <>

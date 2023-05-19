@@ -12,9 +12,11 @@ import SearchWhite from "../../assets/icons/SearchWhite";
 import SearchBlack from "../../assets/icons/SearchBlack";
 import DText from "../themedComponents/DText";
 import { layout } from "../../constants/layout";
+import { useAuth } from "../../context/auth";
 
 const Header = () => {
   const theme = useColorScheme();
+  const { signOut } = useAuth();
   const backgroundColor = useThemeColor(
     { light: Colors.light.HomeBackground, dark: Colors.dark.HomeBackground },
     "background"
@@ -56,10 +58,12 @@ const Header = () => {
         </Text>
       </View>
       <View>
-        <Image
-          style={{ height: 44, width: 44, borderRadius: 22 }}
-          source={require("../../assets/images/pfp.jpeg")}
-        />
+        <TouchableOpacity onPress={signOut}>
+          <Image
+            style={{ height: 44, width: 44, borderRadius: 22 }}
+            source={require("../../assets/images/pfp.jpeg")}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );

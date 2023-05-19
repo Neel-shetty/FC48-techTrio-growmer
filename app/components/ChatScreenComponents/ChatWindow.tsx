@@ -3,45 +3,61 @@ import React from "react";
 import Message from "./Message";
 import { Formik } from "formik";
 import ChatInput from "./ChatInput";
-import firestore from "firebase/firestore";
-import { db } from "../../config/firebaseConfig";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+// import firestore from "firebase/firestore";
+// import { db } from "../../config/firebaseConfig";
+// import { collection, addDoc, getDocs } from "firebase/firestore";
+import firestore from "@react-native-firebase/firestore";
+import { useAuth } from "../../context/auth";
+import { SendMessageToServer } from "../../api/SendMessageToServer";
+
+export type messagesType = {
+  uid: string;
+  message: string;
+}[];
 
 const ChatWindow = () => {
-  const [messages, setMessages] = React.useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 23,
-  ]);
+  const [messages, setMessages] = React.useState<messagesType>([]);
   const ref = React.useRef(FlatList);
-  
-    async function getMessages() {
-    if (route.params?.history) {
-      setMessages(route.params?.history);
-      return;
-    }
+  const { user } = useAuth();
+  // console.log("🚀 ~ file: ChatWindow.tsx:21 ~ ChatWindow ~ user:", user);
+
+  async function getMessages() {
+    firestore().collection("chats").doc("1-2").set({ userId: user.uid });
+
     firestore()
-      .collection('chats')
-      .doc(route.params?.chatId)
-      .collection('messages')
-      .orderBy('createdAt', 'asc')
+      .collection("chats")
+      .doc("1-2")
+      .collection("messages")
+      .orderBy("createdAt", "asc")
       // .limitToLast(5)
-      .onSnapshot(doc => {
-        console.log('🚀 ~ file: Chat.tsx:58 ~ getMessages ~ doc:', doc);
+      .onSnapshot((doc) => {
+        // console.log("🚀 ~ file: Chat.tsx:58 ~ getMessages ~ doc:", doc);
         const texts: messagesType = [];
-        doc.forEach(message => {
+        doc.forEach((message) => {
           texts.push(message.data() as messagesType[0]);
         });
         setMessages(texts);
       });
-  
-
-
-    const querySnapshot = await getDocs(collection(db, "chats"))
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-    });
-
-    const messages = await firestore.collection(db, "chats").firestore;
   }
+
+  React.useEffect(() => {
+    getMessages();
+  }, []);
+
+  async function sendMessage(message: string) {
+    // limit it to 50 recent messages
+    SendMessageToServer(message, user.uid);
+    await firestore()
+      .collection("chats")
+      .doc("1-2")
+      .collection("messages")
+      .add({
+        uid: user?.uid,
+        message,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -49,9 +65,15 @@ const ChatWindow = () => {
           ref={ref}
           data={messages}
           renderItem={({ item }) => (
-            <Message time={new Date()} textAlign="left" message="hello!" />
+            <Message
+              time={new Date()}
+              textAlign={user.uid === item.uid ? "right" : "left"}
+              message={item.message}
+            />
           )}
-          onContentSizeChange={() => ref.current.scrollToEnd()}
+          onContentSizeChange={() => {
+            if (messages.length > 0) ref.current.scrollToEnd();
+          }}
         />
       </View>
       <Formik
@@ -59,6 +81,7 @@ const ChatWindow = () => {
         onSubmit={(values, { resetForm }) => {
           if (values.message === "") return;
           console.log(values);
+          sendMessage(values.message);
           resetForm();
         }}
       >

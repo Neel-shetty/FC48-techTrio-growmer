@@ -53,7 +53,7 @@ const ChatInput = ({
       height: 40,
       color: textColor,
       backgroundColor: inputColor,
-      width: layout().width * 0.7,
+      width: layout().width * 0.78,
       alignSelf: "center",
       borderRadius: 12,
       marginBottom: 10,

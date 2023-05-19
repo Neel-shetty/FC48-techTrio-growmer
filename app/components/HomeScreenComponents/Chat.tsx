@@ -26,10 +26,12 @@ const Chat = ({ chat }: { chat: ChatType }) => {
         justifyContent: "space-between",
         width: layout().widthp,
         marginVertical: 15,
+        height: 52,
+        // backgroundColor: "pink",
       }}
     >
-      <Link href={"/chat/1"}>
-        <View style={{ flex: 1 }}>
+      <Link href={"/chat"}>
+        <View style={{ marginRight: 10, paddingRight: 10 }}>
           <Image
             style={{ height: 52, width: 52, borderRadius: 26 }}
             source={chat.profilePic}
@@ -38,7 +40,7 @@ const Chat = ({ chat }: { chat: ChatType }) => {
         <View
           style={{
             justifyContent: "center",
-            flex: 2,
+            flex: 1,
             paddingTop: 6,
             // backgroundColor: "pink",
           }}
@@ -58,13 +60,13 @@ const Chat = ({ chat }: { chat: ChatType }) => {
         </View>
         <View style={{ flex: 1 }}>
           <Text
-            style={{ textAlign: "right" }}
+            style={{ textAlign: "right", fontFamily: "PoppinsRegular" }}
             lightColor="#797C7B"
             darkColor="#9b9b9b"
           >
-            {date}
+            {/* {date} */}
           </Text>
-          <View style={{ height: 21, width: 21 }}></View>
+          {/* <View style={{ height: 21, width: 21 }}></View> */}
         </View>
       </Link>
     </TouchableOpacity>
