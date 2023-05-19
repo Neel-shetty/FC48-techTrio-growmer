@@ -114,7 +114,8 @@ def login():
                    
             }
             custom_token = auth.create_custom_token(uid,additionals_claims)
-            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone_Number":user.phoneNumber,"authToken":str(custom_token)}
+            # custom_token = custom_token.replace('"', "'")
+            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone_Number":user.phoneNumber,"authToken":format(custom_token)}
 
 
 @app.route('/details',methods=['GET','POST'])
