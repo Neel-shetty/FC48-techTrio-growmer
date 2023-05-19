@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
+from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory,jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine,desc
@@ -113,10 +113,11 @@ def login():
                 "email":user.email
                    
             }
-            custom_token = auth.create_custom_token(uid,additionals_claims)
+            custom_token = auth.create_custom_token(uid,additionals_claims).decode()
+            # custom_token = get_id_token(uid,additionals_claims)
             # custom_token = custom_token.replace('"', "'")
-            return {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone_Number":user.phoneNumber,"authToken":format(custom_token)}
-
+            response =  {"status":1,"score":user.score,"id":user.id,"name":user.name,"email":user.email,"phone_Number":user.phoneNumber,"authToken":custom_token}
+            return jsonify(response)
 
 @app.route('/details',methods=['GET','POST'])
 def details():   
